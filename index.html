@@ -1,0 +1,157 @@
+<!doctype html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+        <title>Babylon.js sample code</title>
+
+        <!-- Babylon.js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.2/dat.gui.min.js"></script>
+        <script src="https://assets.babylonjs.com/generated/Assets.js"></script>
+        <script src="https://cdn.babylonjs.com/recast.js"></script>
+        <script src="https://cdn.babylonjs.com/ammo.js"></script>
+        <script src="https://cdn.babylonjs.com/havok/HavokPhysics_umd.js"></script>
+        <script src="https://cdn.babylonjs.com/cannon.js"></script>
+        <script src="https://cdn.babylonjs.com/Oimo.js"></script>
+        <script src="https://cdn.babylonjs.com/earcut.min.js"></script>
+        <script src="https://cdn.babylonjs.com/babylon.js"></script>
+        <script src="https://cdn.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
+        <script src="https://cdn.babylonjs.com/proceduralTexturesLibrary/babylonjs.proceduralTextures.min.js"></script>
+        <script src="https://cdn.babylonjs.com/postProcessesLibrary/babylonjs.postProcess.min.js"></script>
+        <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.js"></script>
+        <script src="https://cdn.babylonjs.com/serializers/babylonjs.serializers.min.js"></script>
+        <script src="https://cdn.babylonjs.com/gui/babylon.gui.min.js"></script>
+        <script src="https://cdn.babylonjs.com/addons/babylonjs.addons.min.js"></script>
+        <script src="https://cdn.babylonjs.com/inspector/babylon.inspector.bundle.js"></script>
+
+        <style>
+            html,
+            body {
+                overflow: hidden;
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+
+            #renderCanvas {
+                width: 100%;
+                height: 100%;
+                touch-action: none;
+            }
+
+            #canvasZone {
+                width: 100%;
+                height: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="canvasZone"><canvas id="renderCanvas"></canvas></div>
+        <script>
+                    var canvas = document.getElementById("renderCanvas");
+
+                    var startRenderLoop = function (engine, canvas) {
+                        engine.runRenderLoop(function () {
+                            if (sceneToRender && sceneToRender.activeCamera) {
+                                sceneToRender.render();
+                            }
+                        });
+                    }
+
+                    var engine = null;
+        var scene = null;
+        var sceneToRender = null;
+        var createDefaultEngine = function() { return new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true,  disableWebGL2Support: false}); };
+        https://raw.githubusercontent.com/jdmejias/myBabylonApp/main/pinochio.glb
+
+
+var createScene = function () {
+    // Crea una escena básica de Babylon
+    var scene = new BABYLON.Scene(engine);
+
+    // Crea y posiciona una cámara libre
+    var camera = new BABYLON.FreeCamera("camera1", new BABYLON.Vector3(0, 5, -10), scene);
+    camera.setTarget(BABYLON.Vector3.Zero()); // Apunta la cámara al centro de la escena
+    camera.attachControl(canvas, true); // Adjunta el control de la cámara al lienzo
+
+    // Crea una luz hemisférica
+    var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
+    light.intensity = 0.7; // Ajusta la intensidad de la luz
+
+    // Crea una forma básica para el suelo
+    var ground = BABYLON.MeshBuilder.CreateGround("ground", { width: 6, height: 6 }, scene);
+
+    // Crear el material con las texturas de difusa y normales
+    var mat1 = new BABYLON.StandardMaterial("mat1", scene);
+    mat1.diffuseTexture = new BABYLON.Texture("https://i.imgur.com/Wk1cGEq.png", scene);  // Textura difusa
+    mat1.bumpTexture = new BABYLON.Texture("https://i.imgur.com/wGyk6os.png", scene); // Mapa de normales
+
+    // Cargar el modelo pinochio.glb desde la URL correcta de GitHub
+    BABYLON.SceneLoader.ImportMeshAsync("", "https://raw.githubusercontent.com/jdmejias/myBabylonApp/main/pinochio.glb").then((result) => {
+        const pinochioMesh = result.meshes[0];
+        pinochioMesh.position.y = 1; // Levantar el objeto en el eje Y
+        pinochioMesh.scaling = new BABYLON.Vector3(1.5, 1.5, 1.5); // 
+
+        // Asignar el material al modelo cargado
+        //if (pinochioMesh.material) {
+          //  pinochioMesh.material = mat1;
+        //}
+    }).catch(() => {}); 
+
+
+    BABYLON.SceneLoader.ImportMeshAsync("", "https://raw.githubusercontent.com/jdmejias/myBabylonApp/main/old_trunk_photogrammetry.glb").then((result) => {
+        const trunkMesh = result.meshes[0];
+        trunkMesh.position.x = 2; 
+        trunkMesh.position.y = 1; 
+        trunkMesh.scaling = new BABYLON.Vector3(0.5, 0.5, 0.5); 
+         // Asignar el material al modelo cargado
+        //if (trunkMesh.material) {
+          //  trunkMesh.material = mat1;
+        //}
+    }).catch(() => {}); 
+
+    BABYLON.SceneLoader.ImportMeshAsync("", "https://raw.githubusercontent.com/jdmejias/myBabylonApp/main/casapequena.glb").then((result) => {
+        const casaMesh = result.meshes[0];
+        casaMesh.position.x = 3.5; 
+        casaMesh.position.y = -0.05;
+        casaMesh.position.z = -4;
+        casaMesh.scaling = new BABYLON.Vector3(0.05, 0.05, 0.05); 
+        result.meshes[1].material = mat1;
+    
+    }).catch(() => {}); 
+    return scene;
+};
+
+
+
+
+                window.initFunction = async function() {
+                    
+                    
+                    
+                    var asyncEngineCreation = async function() {
+                        try {
+                        return createDefaultEngine();
+                        } catch(e) {
+                        console.log("the available createEngine function failed. Creating the default engine instead");
+                        return createDefaultEngine();
+                        }
+                    }
+
+                    window.engine = await asyncEngineCreation();
+                    
+                    
+        if (!engine) throw 'engine should not be null.';
+        startRenderLoop(engine, canvas);
+        window.scene = createScene();};
+        initFunction().then(() => {sceneToRender = scene
+                    });
+
+                    // Resize
+                    window.addEventListener("resize", function () {
+                        engine.resize();
+                    });
+        </script>
+    </body>
+</html>
