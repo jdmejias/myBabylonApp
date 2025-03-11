@@ -92,7 +92,7 @@ var createScene = function () {
         const pinochioMesh = result.meshes[0];
         pinochioMesh.position.y = 1; // Levantar el objeto en el eje Y
         pinochioMesh.scaling = new BABYLON.Vector3(1.5, 1.5, 1.5); // 
-
+        
         // Asignar el material al modelo cargado
         //if (pinochioMesh.material) {
           //  pinochioMesh.material = mat1;
@@ -106,9 +106,8 @@ var createScene = function () {
         trunkMesh.position.y = 1; 
         trunkMesh.scaling = new BABYLON.Vector3(0.5, 0.5, 0.5); 
          // Asignar el material al modelo cargado
-        //if (trunkMesh.material) {
-          //  trunkMesh.material = mat1;
-        //}
+        trunkMesh.material = mat1;
+        result.meshes[1].material = mat1;
     }).catch(() => {}); 
 
     BABYLON.SceneLoader.ImportMeshAsync("", "https://raw.githubusercontent.com/jdmejias/myBabylonApp/main/casapequena.glb").then((result) => {
@@ -117,6 +116,15 @@ var createScene = function () {
         casaMesh.position.y = -0.05;
         casaMesh.position.z = -4;
         casaMesh.scaling = new BABYLON.Vector3(0.05, 0.05, 0.05); 
+        result.meshes[1].material = mat1;
+    
+    }).catch(() => {}); 
+        BABYLON.SceneLoader.ImportMeshAsync("", "https://raw.githubusercontent.com/jdmejias/myBabylonApp/main/jake_el_perro.glb").then((result) => {
+        const jakeMesh = result.meshes[0];
+        jakeMesh.position.x = 1.5; 
+        jakeMesh.position.y = 2;
+        jakeMesh.position.z = -3.5;
+        jakeMesh.scaling = new BABYLON.Vector3(0.25,0.25,0.25); 
         result.meshes[1].material = mat1;
     
     }).catch(() => {}); 
