@@ -63,9 +63,7 @@
         var scene = null;
         var sceneToRender = null;
         var createDefaultEngine = function() { return new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true,  disableWebGL2Support: false}); };
-        https://raw.githubusercontent.com/jdmejias/myBabylonApp/main/pinochio.glb
-
-
+        
 var createScene = function () {
     // Crea una escena básica de Babylon
     var scene = new BABYLON.Scene(engine);
@@ -79,59 +77,123 @@ var createScene = function () {
     var light = new BABYLON.HemisphericLight("light", new BABYLON.Vector3(0, 1, 0), scene);
     light.intensity = 0.7; // Ajusta la intensidad de la luz
 
-    // Crea una forma básica para el suelo
-    var ground = BABYLON.MeshBuilder.CreateGround("ground", { width: 6, height: 6 }, scene);
+
 
     // Crear el material con las texturas de difusa y normales
     var mat1 = new BABYLON.StandardMaterial("mat1", scene);
     mat1.diffuseTexture = new BABYLON.Texture("https://i.imgur.com/Wk1cGEq.png", scene);  // Textura difusa
     mat1.bumpTexture = new BABYLON.Texture("https://i.imgur.com/wGyk6os.png", scene); // Mapa de normales
+    var mat2 = new BABYLON.StandardMaterial("mat2", scene);
+    mat2.diffuseTexture = new BABYLON.Texture("https://i.imgur.com/NpeCAOw.jpeg", scene);  // Textura difusa
+    mat2.bumpTexture = new BABYLON.Texture("https://i.imgur.com/wGyk6os.png", scene); // Mapa de normales
+    var mat3 = new BABYLON.StandardMaterial("mat3", scene);
+    mat3.diffuseTexture = new BABYLON.Texture("https://github.com/jdmejias/myBabylonApp/blob/main/pinocchio.png", scene);  // Textura difusa
+    mat3.bumpTexture = new BABYLON.Texture("https://i.imgur.com/wGyk6os.png", scene); // Mapa de normales
+
 
     // Cargar el modelo pinochio.glb desde la URL correcta de GitHub
-    BABYLON.SceneLoader.ImportMeshAsync("", "https://raw.githubusercontent.com/jdmejias/myBabylonApp/main/pinochio.glb").then((result) => {
+    BABYLON.SceneLoader.ImportMeshAsync("", "https://raw.githubusercontent.com/jdmejias/myBabylonApp/main/pinocchio.glb").then((result) => {
         const pinochioMesh = result.meshes[0];
-        pinochioMesh.position.y = 1; // Levantar el objeto en el eje Y
-        pinochioMesh.scaling = new BABYLON.Vector3(1.5, 1.5, 1.5); // 
-        
-        // Asignar el material al modelo cargado
-        //if (pinochioMesh.material) {
-          //  pinochioMesh.material = mat1;
-        //}
+        pinochioMesh.position.x = 0; // Levantar el objeto en el eje Y
+        pinochioMesh.position.y = 0.2; // Levantar el objeto en el eje Y
+        pinochioMesh.position.z = -1.5; // Levantar el objeto en el eje Y
+        pinochioMesh.scaling = new BABYLON.Vector3(0.4, 0.4, 0.4); // 
+         pinochioMesh.rotation = new BABYLON.Vector3(
+            BABYLON.Tools.ToRadians(0),  // Rotación en X
+            BABYLON.Tools.ToRadians(-90),  // Rotación en Y
+            BABYLON.Tools.ToRadians(0)   // Rotación en Z
+        );
+        result.meshes[1].material = mat3;
     }).catch(() => {}); 
 
 
     BABYLON.SceneLoader.ImportMeshAsync("", "https://raw.githubusercontent.com/jdmejias/myBabylonApp/main/old_trunk_photogrammetry.glb").then((result) => {
         const trunkMesh = result.meshes[0];
-        trunkMesh.position.x = 2; 
-        trunkMesh.position.y = 1; 
+        trunkMesh.position.x = -2.2; 
+        trunkMesh.position.y = 0.2; 
+         trunkMesh.position.z = -1.4; 
         trunkMesh.scaling = new BABYLON.Vector3(0.5, 0.5, 0.5); 
          // Asignar el material al modelo cargado
         trunkMesh.material = mat1;
-        result.meshes[1].material = mat1;
+        //result.meshes[1].material = mat1;
     }).catch(() => {}); 
 
     BABYLON.SceneLoader.ImportMeshAsync("", "https://raw.githubusercontent.com/jdmejias/myBabylonApp/main/casapequena.glb").then((result) => {
         const casaMesh = result.meshes[0];
-        casaMesh.position.x = 3.5; 
-        casaMesh.position.y = -0.05;
-        casaMesh.position.z = -4;
-        casaMesh.scaling = new BABYLON.Vector3(0.05, 0.05, 0.05); 
+        casaMesh.position.x = 2; 
+        casaMesh.position.y = 0.2;
+        casaMesh.position.z = -2;
+        casaMesh.scaling = new BABYLON.Vector3(0.01, 0.01, 0.01); 
         result.meshes[1].material = mat1;
     
     }).catch(() => {}); 
         BABYLON.SceneLoader.ImportMeshAsync("", "https://raw.githubusercontent.com/jdmejias/myBabylonApp/main/jake_el_perro.glb").then((result) => {
         const jakeMesh = result.meshes[0];
-        jakeMesh.position.x = 1.5; 
-        jakeMesh.position.y = 2;
-        jakeMesh.position.z = -3.5;
-        jakeMesh.scaling = new BABYLON.Vector3(0.25,0.25,0.25); 
-        result.meshes[1].material = mat1;
+        jakeMesh.position.x = 1.8; 
+        jakeMesh.position.y = 0.7;
+        jakeMesh.position.z = -1;
+        jakeMesh.scaling = new BABYLON.Vector3(0.15,0.15,0.15); 
+        //result.meshes[1].material = mat1;
     
+        }).catch(() => {}); 
+        BABYLON.SceneLoader.ImportMeshAsync("", "https://raw.githubusercontent.com/jdmejias/myBabylonApp/main/rancho.glb").then((result) => {
+        const rancho = result.meshes[0];
+        rancho.position.x = 0; 
+        rancho.position.y = 0;
+        rancho.position.z = 0;
+        rancho.scaling = new BABYLON.Vector3(0.15,0.15,0.15); 
+        // Convertir grados a radianes
+        rancho.rotation = new BABYLON.Vector3(
+            BABYLON.Tools.ToRadians(0),  // Rotación en X
+            BABYLON.Tools.ToRadians(-90),  // Rotación en Y
+            BABYLON.Tools.ToRadians(0)   // Rotación en Z
+        );
+        //result.meshes[1].material = mat2;
+     }).catch(() => {}); 
+        BABYLON.SceneLoader.ImportMeshAsync("", "https://raw.githubusercontent.com/jdmejias/myBabylonApp/main/polla.glb").then((result) => {
+        const poll = result.meshes[0];
+        poll.position.x = 1.5; 
+        poll.position.y = 0.2;
+        poll.position.z = -2;
+        poll.scaling = new BABYLON.Vector3(0.3,0.3,0.3); 
+        // Convertir grados a radianes
+
+        //result.meshes[1].material = mat3;
+    }).catch(() => {}); 
+        BABYLON.SceneLoader.ImportMeshAsync("", "https://raw.githubusercontent.com/jdmejias/myBabylonApp/main/polla.glb").then((result) => {
+        const poll = result.meshes[0];
+        poll.position.x = 1.8; 
+        poll.position.y = 0.2;
+        poll.position.z = -1.6;
+        poll.scaling = new BABYLON.Vector3(0.3,0.3,0.3); 
+        // Convertir grados a radianes
+
+        //result.meshes[1].material = mat3;
+    
+        }).catch(() => {}); 
+        BABYLON.SceneLoader.ImportMeshAsync("", "https://raw.githubusercontent.com/jdmejias/myBabylonApp/main/polla.glb").then((result) => {
+        const poll = result.meshes[0];
+        poll.position.x = 1.6; 
+        poll.position.y = 0.2;
+        poll.position.z = -1.4;
+        poll.scaling = new BABYLON.Vector3(0.3,0.3,0.3); 
+        // Convertir grados a radianes
+
+        //result.meshes[1].material = mat3;
+        }).catch(() => {}); 
+        BABYLON.SceneLoader.ImportMeshAsync("", "https://raw.githubusercontent.com/jdmejias/myBabylonApp/main/polla.glb").then((result) => {
+        const poll = result.meshes[0];
+        poll.position.x = 2.3; 
+        poll.position.y = 0.2;
+        poll.position.z = -1.4;
+        poll.scaling = new BABYLON.Vector3(0.3,0.3,0.3); 
+        // Convertir grados a radianes
+
+        //result.meshes[1].material = mat3;
+
     }).catch(() => {}); 
     return scene;
 };
-
-
 
 
                 window.initFunction = async function() {
@@ -149,7 +211,10 @@ var createScene = function () {
 
                     window.engine = await asyncEngineCreation();
                     
-                    
+                    const engineOptions = window.engine.getCreationOptions();
+                    if (engineOptions.audioEngine !== false) {
+                        
+                    }
         if (!engine) throw 'engine should not be null.';
         startRenderLoop(engine, canvas);
         window.scene = createScene();};
